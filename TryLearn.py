@@ -1,5 +1,10 @@
-import numpy as np
+import numpy
 import pandas
+
+
+
+trainNP=numpy.genfromtxt("train.csv", delimiter=",", dtype="U75", skip_header=1)
+print(trainNP)
 
 
 train=pandas.read_csv("cleaned2.csv")
