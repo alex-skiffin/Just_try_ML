@@ -37,22 +37,28 @@ testNP=allDataForNormalize[:50000,:]
 XData = allDataForNormalize[:50000,:-1]
 YTarget = allDataForNormalize[:50000,-1]
 
-print("fit data")
+print("fit clf data")
 from sklearn import svm
 clf = svm.SVC(gamma=0.001, C=100.)
 clf.fit(XData, YTarget)
+print("predict clf data")
+testCLFResult=clf.predict(testNP)
+
+numpy.savetxt("CLFresult.csv", testCLFResult, delimiter=",")
 #print(len(X))
 #from sklearn.naive_bayes import GaussianNB
 #gnb = GaussianNB()
 #y_pred = gnb.fit(X, Y)#.predict(X)
 #print(y_pred)
 
+print("normalized_X")
 from sklearn import preprocessing
 # normalize the data attributes
 normalized_X = preprocessing.normalize(XData)
 # standardize the data attributes
 #standardized_X = preprocessing.scale(X)
 
+print("GaussianNB")
 from sklearn import metrics
 from sklearn.naive_bayes import GaussianNB
 model = GaussianNB()
@@ -64,3 +70,5 @@ predicted = model.predict(testNP)
 # summarize the fit of the model
 print(metrics.classification_report(expected, predicted))
 print(metrics.confusion_matrix(expected, predicted))
+
+numpy.savetxt("GaussianNBresult.csv", predicted, delimiter=",")
