@@ -69,9 +69,9 @@ for el in testCLFResult:
 	result[i][1]=el
 	result[i][0]=i-1
 	i=i+1
-
-numpy.savetxt("CLFresult.csv", testCLFResult.astype(float), delimiter=",")
-numpy.savetxt("CLFresult2.csv", result.astype(float), delimiter=",")
+toResult=numpy.array(result)
+#numpy.savetxt("CLFresult.csv", testCLFResult.astype(float), delimiter=",")
+numpy.savetxt("CLFresult2.csv", toResult.astype(float), delimiter=",")
 #print(len(X))
 #from sklearn.naive_bayes import GaussianNB
 #gnb = GaussianNB()
