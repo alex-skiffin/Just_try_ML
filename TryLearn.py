@@ -60,10 +60,11 @@ clf = svm.SVC(gamma=0.001, C=100.)
 clf.fit(XData, YTarget)
 print("predict clf data")
 testCLFResult=clf.predict(testNP)
-result=[[0 for x in range(2)] for x in range(63)] 
+result=[[0 for x in range(2)] for x in range(50005)] 
 result[0][0]="ID"
 result[0][1]="y"
 i=1
+numpy.savetxt("CLFresult.csv", testCLFResult.astype(float), delimiter=",")
 for el in testCLFResult:
 	result[i][1]=el
 	result[i][0]=i-1
