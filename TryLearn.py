@@ -1,5 +1,7 @@
 import numpy
 import pandas
+import time
+print ("start time:	" + time.strftime("%H:%M:%S_%d/%m/%Y"))
 
 print("load data")
 trainNP=numpy.genfromtxt("train.csv", delimiter=",", dtype="U75", skip_header=1)
@@ -42,6 +44,7 @@ while i <= (len(allDataForNormalize[0,:])-1):
 print (str(len(allDataForNormalize[0,:])) +'		'+str(len(allDataForNormalize[:,0])))
 print (str(len(testNP[0,:])) +'		'+str(len(testNP[:,0])))
 print ("save to file")
+print ("time:	" + time.strftime("%H:%M:%S_%d/%m/%Y"))
 numpy.savetxt("testNP.csv", testNP.astype(float), delimiter=",")
 numpy.savetxt("allDataForNormalize.csv", allDataForNormalize.astype(float), delimiter=",")
 XData = allDataForNormalize[:50000,:]
@@ -55,10 +58,12 @@ print (str(len(testNP[0,:])) +'		'+str(len(testNP[:,0])))
 print (testNP[-1,:])
 
 print("fit clf data")
+print ("time:	" + time.strftime("%H:%M:%S_%d/%m/%Y"))
 from sklearn import svm
 clf = svm.SVC(gamma=0.001, C=100.)
 clf.fit(XData, YTarget)
 print("predict clf data")
+print ("time:	" + time.strftime("%H:%M:%S_%d/%m/%Y"))
 testCLFResult=clf.predict(testNP)
 result=[[0 for x in range(2)] for x in range(50005)] 
 result[0][0]="ID"
@@ -71,7 +76,7 @@ for el in testCLFResult:
 	i=i+1
 toResult=numpy.array(result)
 #numpy.savetxt("CLFresult.csv", testCLFResult.astype(float), delimiter=",")
-numpy.savetxt("CLFresult2.csv", toResult.astype(float), delimiter=",")
+numpy.savetxt("CLFresult2.csv", toResult, delimiter=",", fmt="%s")
 #print(len(X))
 #from sklearn.naive_bayes import GaussianNB
 #gnb = GaussianNB()
@@ -79,6 +84,7 @@ numpy.savetxt("CLFresult2.csv", toResult.astype(float), delimiter=",")
 #print(y_pred)
 
 print("normalized_X")
+print ("time:	" + time.strftime("%H:%M:%S_%d/%m/%Y"))
 from sklearn import preprocessing
 # normalize the data attributes
 normalized_X = preprocessing.normalize(XData.astype(float))
@@ -86,6 +92,7 @@ normalized_X = preprocessing.normalize(XData.astype(float))
 #standardized_X = preprocessing.scale(X)
 
 print("GaussianNB")
+print ("time:	" + time.strftime("%H:%M:%S_%d/%m/%Y"))
 from sklearn import metrics
 from sklearn.naive_bayes import GaussianNB
 model = GaussianNB()
@@ -99,3 +106,4 @@ print(metrics.classification_report(expected, predicted))
 print(metrics.confusion_matrix(expected, predicted))
 
 numpy.savetxt("GaussianNBresult.csv", predicted.astype(float), delimiter=",")
+print ("end time:	" + time.strftime("%H:%M:%S_%d/%m/%Y"))
